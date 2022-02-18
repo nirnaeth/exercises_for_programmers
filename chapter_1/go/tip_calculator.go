@@ -9,6 +9,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -19,21 +20,21 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)     // Read from stdin
 	input, _ := reader.ReadString('\n')     // ReadString will block until the delimiter is entered
 	input = strings.TrimSuffix(input, "\n") // remove the delimeter from the string
-	bill, _ := strconv.ParseFloat(input, 32)
+	bill, _ := strconv.ParseFloat(input, 64)
 
 	fmt.Print("Enter the rate: ")
 	reader = bufio.NewReader(os.Stdin)      // Read from stdin
 	input, _ = reader.ReadString('\n')      // ReadString will block until the delimiter is entered
 	input = strings.TrimSuffix(input, "\n") // remove the delimeter from the string
-	rate, _ := strconv.ParseFloat(input, 32)
+	rate, _ := strconv.ParseFloat(input, 64)
 
-	tip := calculateTip(float32(bill), float32(rate))
-	total := float32(bill) + tip
+	tip := calculateTip(bill, rate)
+	total := bill + tip
 
 	fmt.Println("The tip is ", tip)
 	fmt.Println("The total is ", total)
 }
 
-func calculateTip(bill float32, rate float32) float32 {
-	return bill / 100 * rate
+func calculateTip(bill float64, rate float64) float64 {
+	return math.Round(bill / 100 * rate)
 }
