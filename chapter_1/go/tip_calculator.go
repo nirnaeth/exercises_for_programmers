@@ -2,6 +2,8 @@
 The program should prompt for a bill amount and a tip rate.
 The program must compute the tip and display both the tip and the total
 amount of the bill.
+
+The program has been extended with the challenges.
 */
 
 package main
@@ -39,7 +41,13 @@ func CalculateTip(bill float64, rate float64) float64 {
 
 func InputToFloat(input string) float64 {
 	input = strings.TrimSuffix(input, "\n") // remove the delimeter from the string
-	converted, _ := strconv.ParseFloat(input, 64)
+
+	converted, err := strconv.ParseFloat(input, 64)
+
+	if err != nil {
+		fmt.Printf("Amount entered '%s' is not a number\n", input)
+		os.Exit(1)
+	}
 
 	return converted
 }
