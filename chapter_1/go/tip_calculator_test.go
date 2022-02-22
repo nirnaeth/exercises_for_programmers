@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"log"
 	"os"
 	"os/exec"
 	"testing"
@@ -23,8 +25,16 @@ func TestCalculateTip(t *testing.T) {
 func TestExitWithErrorWhenInputIsNotANumber(t *testing.T) {
 	invalid_bill := "not a number"
 
-	if os.Getenv("CRASH") == "1" {
-		InputToFloat(invalid_bill)
+	if os.Getenv("CRASH") == "1" { // setting env to test the wrongful exit status
+		output := captureOutput(func() { // capturing output to verify message, see support function at the bottom
+			InputToFloat(invalid_bill)
+		})
+
+		expected_message := "Amount entered 'not a number' is not a number\n"
+
+		if output != expected_message { // this is actually not working
+			t.Errorf("got %s, expected %s", output, expected_message)
+		}
 		return
 	}
 
@@ -48,4 +58,14 @@ func TestNumberToFloat(t *testing.T) {
 	if number != expected {
 		t.Errorf("got %f, expected %f", number, expected)
 	}
+}
+
+// Support
+// captures the output to stdout to test the messages
+func captureOutput(f func()) string {
+	var buf bytes.Buffer
+	log.SetOutput(&buf)
+	f()
+	log.SetOutput(os.Stderr)
+	return buf.String()
 }
