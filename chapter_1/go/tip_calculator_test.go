@@ -2,9 +2,8 @@ package main
 
 import (
 	"bytes"
-	"log"
+	"io"
 	"os"
-	"os/exec"
 	"testing"
 )
 
@@ -14,7 +13,7 @@ func TestCalculateTip(t *testing.T) {
 
 	expected := 20.0
 
-	tip := CalculateTip(bill, rate)
+	tip := calculateTip(bill, rate)
 
 	if tip != expected {
 		t.Errorf("got %f, expected %f", tip, expected)
@@ -53,19 +52,60 @@ func TestNumberToFloat(t *testing.T) {
 
 	expected := 100.0
 
-	number, _ := InputToFloat(input)
+	number, _ := inputToFloat(input)
 
 	if number != expected {
 		t.Errorf("got %f, expected %f", number, expected)
 	}
 }
 
+// func TestRetrieveBillDoesNotAcceptStrings(t *testing.T) {
+// 	var bill float64
+// 	input_from_keyboard := "test"
+// 	config := "test"
+// 	reader := strings.NewReader(input_from_keyboard)
+
+// 	output := captureOutput(func() { // capturing output to verify message, see support function at the bottom
+// 		retrieveBill(reader, bill, config)
+// 	})
+
+// 	expected_message := "Not a valid number!\n"
+
+// 	if output == expected_message {
+// 		t.Fatalf("got %s, expected %s", output, expected_message)
+// 	}
+// }
+
+// func TestRetrieveRateDoesNotAcceptStrings(t *testing.T) {
+// 	var rate float64
+// 	input_from_keyboard := "test"
+// 	config := "test"
+// 	reader := strings.NewReader(input_from_keyboard)
+
+// 	output := captureOutput(func() { // capturing output to verify message, see support function at the bottom
+// 		retrieveRate(reader, rate, config)
+// 	})
+
+// 	expected_message := "Not a valid number!\n"
+
+// 	if output == expected_message {
+// 		t.Fatalf("got %s, expected %s", output, expected_message)
+// 	}
+// }
+
 // Support
 // captures the output to stdout to test the messages
-// func captureOutput(f func()) string {
-// 	var buf bytes.Buffer
-// 	log.SetOutput(&buf)
-// 	f()
-// 	log.SetOutput(os.Stderr)
-// 	return buf.String()
-// }
+func captureOutput(tested_function func()) string {
+	var buffer bytes.Buffer
+	original := os.Stdout
+	reader, writer, _ := os.Pipe()
+
+	tested_function()
+
+	io.Copy(&buffer, reader)
+
+	writer.Close()
+	os.Stdout = original
+
+	return buffer.String()
+}
