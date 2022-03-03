@@ -12,9 +12,9 @@ import (
 
 func main() {
 	input := os.Stdin
-	reader := bufio.NewReader(input) // Read from stdin
-
 	fmt.Println("What is your name? ")
+
+	reader := bufio.NewReader(input)   // Read from stdin
 	name, _ := reader.ReadString('\n') // ReadString will block until the delimiter is entered
 	name = strings.TrimSpace(name)     // remove the delimeter from the string
 

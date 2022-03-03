@@ -5,23 +5,23 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
-	"strings"
 )
 
 func main() {
 	input := os.Stdin
-	reader := bufio.NewReader(input) // Read from stdin
 
 	fmt.Println("What is the input string?")
 
-	string, _ := reader.ReadString('\n') // ReadString will block until the delimiter is entered
-	string = strings.TrimSpace(string)   // remove the delimeter from the string
-	length := len(string)
+	// reader := bufio.NewReader(input) // Read from stdin
+	// string, _ := reader.ReadString('\n') // ReadString will block until the delimiter is entered
+	// string = strings.TrimSpace(string)   // remove the delimeter from the string
 
-	fmt.Printf("%s has %d characters\n", string, length)
+	word := ReadAndCleanString(input)
+	length := len(word)
+
+	fmt.Printf("%s has %d characters\n", word, length)
 }
 
 // TODO: Create module for support functions
