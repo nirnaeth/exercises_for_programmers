@@ -7,6 +7,7 @@ package main
 import (
 	"fmt"
 	"os"
+	support "support/go/support.go/support/go"
 )
 
 func main() {
@@ -18,10 +19,8 @@ func main() {
 	// string, _ := reader.ReadString('\n') // ReadString will block until the delimiter is entered
 	// string = strings.TrimSpace(string)   // remove the delimeter from the string
 
-	word := ReadAndCleanString(input)
+	word := support.ReadAndCleanString(input)
 	length := len(word)
 
 	fmt.Printf("%s has %d characters\n", word, length)
 }
-
-// TODO: Create module for support functions
