@@ -19,8 +19,15 @@ func main() {
 	// string, _ := reader.ReadString('\n') // ReadString will block until the delimiter is entered
 	// string = strings.TrimSpace(string)   // remove the delimeter from the string
 
-	word := support.ReadAndCleanString(input)
-	length := len(word)
+	for {
+		word := support.ReadAndCleanString(input)
+		length := len(word)
 
-	fmt.Printf("%s has %d characters\n", word, length)
+		if length > 0 {
+			fmt.Printf("%s has %d characters\n", word, length)
+			break
+		}
+
+		fmt.Println("You need to provide a string. What is the input string?")
+	}
 }
