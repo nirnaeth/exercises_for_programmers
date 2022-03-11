@@ -9,18 +9,39 @@ import (
 )
 
 func main() {
+	var number_1 int64
+	var number_2 int64
+
 	input := os.Stdin
 	reader := bufio.NewReader(input)
 
-	fmt.Print("Enter the first number: ")
-	input_1, _ := reader.ReadString('\n')
-	input_1 = strings.TrimSpace(input_1)
-	number_1, _ := strconv.ParseInt(input_1, 10, 64)
+	for {
+		fmt.Print("Enter the first number: ")
+		input, _ := reader.ReadString('\n')
+		input = strings.TrimSpace(input)
+		value, err := strconv.ParseInt(input, 10, 64)
 
-	fmt.Print("Enter the first number: ")
-	input_2, _ := reader.ReadString('\n')
-	input_2 = strings.TrimSpace(input_2)
-	number_2, _ := strconv.ParseInt(input_2, 10, 64)
+		if err == nil && value >= 0 {
+			number_1 = value
+			break
+		}
+
+		fmt.Print("Not a valid number! ")
+	}
+
+	for {
+		fmt.Print("Enter the second number: ")
+		input, _ := reader.ReadString('\n')
+		input = strings.TrimSpace(input)
+		value, err := strconv.ParseInt(input, 10, 64)
+
+		if err == nil && value >= 0 {
+			number_2 = value
+			break
+		}
+
+		fmt.Print("Not a valid number! ")
+	}
 
 	fmt.Printf("%d + %d = %d\n", number_1, number_2, Sum(number_1, number_2))
 	fmt.Printf("%d - %d = %d\n", number_1, number_2, Sub(number_1, number_2))
