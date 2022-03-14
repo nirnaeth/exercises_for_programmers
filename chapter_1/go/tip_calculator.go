@@ -19,7 +19,6 @@ import (
 )
 
 func main() {
-
 	conf := "prod"
 
 	CalculateTotalWithTip(conf)
