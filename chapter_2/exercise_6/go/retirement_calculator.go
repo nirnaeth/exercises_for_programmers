@@ -23,9 +23,7 @@ func main() {
 	fmt.Printf("You have %d years until you can retire.\n", yearsLeft)
 
 	currentTime := time.Now()
-
 	retirementYear := currentTime.Year() + yearsLeft
-
 	fmt.Printf("It's %d, so you can retire in %d\n", currentTime.Year(), retirementYear)
 }
 
