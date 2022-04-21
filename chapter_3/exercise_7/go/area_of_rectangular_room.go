@@ -12,36 +12,9 @@ func main() {
 	input := os.Stdin
 	reader := bufio.NewReader(input)
 
-	var length float64
-	var width float64
+	length := floatInputValidation(reader, "What is the length of the room in feet? ")
 
-	for {
-		fmt.Print("What is the length of the room in feet? ")
-
-		entered := support.ReadAndCleanString(reader)
-		converted, err := strconv.ParseFloat(entered, 64)
-
-		if err == nil && converted >= 0 {
-			length = converted
-			break
-		}
-
-		fmt.Print("Not a valid number! ")
-	}
-
-	for {
-		fmt.Print("What is the width of the room in feet? ")
-
-		entered := support.ReadAndCleanString(reader)
-		converted, err := strconv.ParseFloat(entered, 64)
-
-		if err == nil && converted >= 0 {
-			width = converted
-			break
-		}
-
-		fmt.Print("Not a valid number! ")
-	}
+	width := floatInputValidation(reader, "What is the width of the room in feet? ")
 
 	fmt.Printf("You entered dimensions of %f feet by %f feet.\n", length, width)
 
@@ -53,4 +26,24 @@ func main() {
 	fmt.Println("The area is:")
 	fmt.Printf("%d square feet\n", casted_imperial_area)
 	fmt.Printf("%f square meters\n", metric_area)
+}
+
+func floatInputValidation(reader *bufio.Reader, question string) float64 {
+	var valid_input float64
+
+	for {
+		fmt.Print(question)
+
+		entered := support.ReadAndCleanString(reader)
+		converted, err := strconv.ParseFloat(entered, 64)
+
+		if err == nil && converted >= 0 {
+			valid_input = converted
+			break
+		}
+
+		fmt.Print("Not a valid number! ")
+	}
+
+	return valid_input
 }
