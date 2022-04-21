@@ -10,19 +10,40 @@ import (
 
 func main() {
 	input := os.Stdin
-
-	fmt.Print("What is the length of the room in feet? ")
-	// can be substituted with ReadAndCleanString(input)
 	reader := bufio.NewReader(input)
-	input_length := support.ReadAndCleanString(reader)
-	length, _ := strconv.ParseInt(input_length, 10, 64)
 
-	fmt.Print("What is the width of the room in feet? ")
-	// can be substituted with ReadAndCleanString(input)
-	input_width := support.ReadAndCleanString(reader)
-	width, _ := strconv.ParseInt(input_width, 10, 64)
+	var length float64
+	var width float64
 
-	fmt.Printf("You entered dimensions of %d feet by %d feet.\n", length, width)
+	for {
+		fmt.Print("What is the length of the room in feet? ")
+
+		entered := support.ReadAndCleanString(reader)
+		converted, err := strconv.ParseFloat(entered, 64)
+
+		if err == nil && converted >= 0 {
+			length = converted
+			break
+		}
+
+		fmt.Print("Not a valid number! ")
+	}
+
+	for {
+		fmt.Print("What is the width of the room in feet? ")
+
+		entered := support.ReadAndCleanString(reader)
+		converted, err := strconv.ParseFloat(entered, 64)
+
+		if err == nil && converted >= 0 {
+			width = converted
+			break
+		}
+
+		fmt.Print("Not a valid number! ")
+	}
+
+	fmt.Printf("You entered dimensions of %f feet by %f feet.\n", length, width)
 
 	const FEET_TO_METERS = 0.09290304
 	imperial_area := float64(length * width)
