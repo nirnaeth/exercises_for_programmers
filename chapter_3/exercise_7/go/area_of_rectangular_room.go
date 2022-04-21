@@ -19,13 +19,13 @@ func main() {
 	fmt.Printf("You entered dimensions of %f feet by %f feet.\n", length, width)
 
 	const FEET_TO_METERS = 0.09290304
-	imperial_area := float64(length * width)
+	imperial_area := length * width
 	metric_area := imperial_area * FEET_TO_METERS
-	casted_imperial_area := int(imperial_area)
+	casted_imperial_area := imperial_area
 
 	fmt.Println("The area is:")
-	fmt.Printf("%d square feet\n", casted_imperial_area)
-	fmt.Printf("%f square meters\n", metric_area)
+	fmt.Printf("%.2f square feet\n", casted_imperial_area)
+	fmt.Printf("%.2f square meters\n", metric_area)
 }
 
 func floatInputValidation(reader *bufio.Reader, question string) float64 {
